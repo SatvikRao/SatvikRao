@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Django Unchained</title>
+    <style>
+        body {
+            background-color: rgba(186, 227, 103, 0.829);
+            margin:0px;
+        }
+        p {
+            font-size: 30px;
+            margin: 50px;
+            text-align: center;
+        }
+        .like-section {
+            text-align: center;
+            margin-top: 20px;
+        }
+        #like-btn {
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        #like-btn:hover {
+            background-color: rgb(0, 0, 255);
+            color: white;
+        }
+        #comment-box {
+            width: 80%;
+            margin: 20px auto;
+            padding: 10px;
+        }
+
+        #submit_cmnt {
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 15px;
+            width: 425px;
+        }
+
+        #submit_cmnt:hover {
+            background-color: green;
+        }
+
+        #comment-section {
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        #clear-storage {
+            margin: 20px auto;
+            display: block;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        #clear-storage:hover {
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="font-size: 100px; text-align: center;">Unraveling the Power and Impact of "Django Unchained"</h1>
+    <p>
+
+        In the realm of cinema, there are films that entertain, films that provoke, and then there are films that challenge societal norms, stir emotions, and leave an indelible mark on the viewer's psyche. Quentin Tarantino's "Django Unchained" undoubtedly falls into the latter category. Released in 2012, this Western masterpiece continues to resonate with audiences around the globe for its unflinching portrayal of slavery, its bold narrative, and its unforgettable characters.
+
+        Set in the pre-Civil War South, "Django Unchained" follows the journey of Django, a freed slave played with raw intensity by Jamie Foxx, as he teams up with a bounty hunter, Dr. King Schultz (portrayed brilliantly by Christoph Waltz), to rescue his wife Broomhilda (Kerry Washington) from the clutches of a sadistic plantation owner, Calvin Candie (a chilling performance by Leonardo DiCaprio).
+
+        At its core, "Django Unchained" is a revenge tale, but it's also much more than that. Tarantino masterfully weaves together themes of justice, freedom, and the enduring legacy of slavery in America. With his trademark style, the director delivers a visceral cinematic experience that forces viewers to confront the horrors of the past while shining a light on the resilience of the human spirit.
+
+        One of the film's most striking aspects is its portrayal of violence. Tarantino doesn't shy away from depicting the brutality of slavery and the harsh realities of life in the Antebellum South. From whip lashings to gunfights, every scene is imbued with a sense of urgency and tension, serving as a stark reminder of the atrocities committed against African Americans during this dark period of history. However, amidst the bloodshed, there are moments of triumph and catharsis, as Django exacts his vengeance against those who have wronged him.
+
+        But perhaps what truly sets "Django Unchained" apart is its subversion of traditional Western tropes. In a genre dominated by white heroes, Tarantino places a black protagonist front and center, giving agency and power to a character who would typically be relegated to the sidelines. Django is not just a passive victim of circumstance; he's a force to be reckoned with, a symbol of resistance against oppression.
+
+        Moreover, the film's dialogue crackles with wit and intelligence, showcasing Tarantino's knack for razor-sharp writing. Whether it's the philosophical musings of Dr. Schultz or the menacing monologues of Calvin Candie, every word feels deliberate and impactful, adding depth to the characters and driving the narrative forward.
+
+        Of course, no discussion of "Django Unchained" would be complete without mentioning its stellar cast. Jamie Foxx, Christoph Waltz, Leonardo DiCaprio, and Kerry Washington deliver powerhouse performances that elevate the material to new heights. Each actor brings a unique energy to their role, infusing the characters with complexity and nuance.
+
+        In the years since its release, "Django Unchained" has sparked countless debates and discussions about race, representation, and the legacy of slavery. Some have criticized Tarantino for his portrayal of violence, while others have praised the film for its unflinching honesty and bold storytelling. Regardless of where one stands, there's no denying the impact that "Django Unchained" has had on popular culture and the lasting impression it leaves on those who watch it.
+
+        In conclusion, "Django Unchained" is a tour de force of filmmaking—a provocative, thought-provoking masterpiece that challenges conventions and forces audiences to confront uncomfortable truths. With its gripping story, memorable characters, and powerful themes, it's a film that lingers in the mind long after the credits roll, reminding us of the enduring power of cinema to provoke, inspire, and incite change.</p>
+    
+    <div class="like-section">
+        <button id="like-btn" onclick="toggleLike()">Like</button>
+        <!-- <span id="like-counter">0</span> -->
+    </div>
+
+    <div id="comment-box">
+        <h2>Leave a Comment</h2>
+        <textarea id="comment-input" rows="4" cols="50"></textarea>
+        <br>
+        <button id="submit_cmnt" onclick="submitComment()">Submit Comment</button>
+    </div>
+
+    <div id="comment-section">
+        <h2>Comments</h2>
+        <ul id="comments-list"></ul>
+    </div>
+
+    <button id="clear-storage" onclick="clearLocalStorage()">Clear Local Storage</button>
+
+    <script>
+        let likeCount = parseInt(localStorage.getItem('likeCount')) || 0;
+        let isLiked = localStorage.getItem('isLiked') === 'true' || false;
+
+        function toggleLike() {
+            if (isLiked) {
+                likeCount--;
+                localStorage.setItem('likeCount', likeCount);
+                document.getElementById('like-btn').innerText = 'Like';
+                isLiked = false;
+            } else {
+                likeCount++;
+                localStorage.setItem('likeCount', likeCount);
+                document.getElementById('like-btn').innerText = 'Liked';
+                isLiked = true;
+            }
+            localStorage.setItem('isLiked', isLiked);
+            document.getElementById('like-counter').innerText = likeCount;
+        }
+
+        // Comment functionality
+        function submitComment() {
+            const commentInput = document.getElementById('comment-input').value;
+            if (commentInput.trim() !== "") {
+                const commentList = document.getElementById('comments-list');
+                const newComment = document.createElement('li');
+                newComment.textContent = commentInput;
+                commentList.appendChild(newComment);
+                document.getElementById('comment-input').value = "";
+
+                const comments = JSON.parse(localStorage.getItem('comments')) || [];
+                comments.push(commentInput);
+                localStorage.setItem('comments', JSON.stringify(comments));
+            }
+        }
+
+        window.onload = function () {
+            const comments = JSON.parse(localStorage.getItem('comments')) || [];
+            const commentList = document.getElementById('comments-list');
+            comments.forEach(comment => {
+                const newComment = document.createElement('li');
+                newComment.textContent = comment;
+                commentList.appendChild(newComment);
+            });
+
+            document.getElementById('like-counter').innerText = likeCount;
+
+            if (isLiked) {
+                document.getElementById('like-btn').innerText = 'Liked';
+            }
+        };
+
+        // Function to clear local storage
+        function clearLocalStorage() {
+            localStorage.clear();
+            likeCount = 0;
+            isLiked = false;
+            document.getElementById('like-counter').innerText = likeCount;
+            document.getElementById('like-btn').innerText = 'Like';
+            const commentList = document.getElementById('comments-list');
+            commentList.innerHTML = '';
+        }
+    </script>
+</body>
+</html>

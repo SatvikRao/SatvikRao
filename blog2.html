@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wolf of Wall Street</title>
+    <style>
+        body {
+            background-color: rgba(16, 177, 183, 0.829);
+            margin:0px;
+        }
+        p {
+            font-size: 30px;
+            margin: 50px;
+            text-align: center;
+        }
+        .like-section {
+            text-align: center;
+            margin-top: 20px;
+        }
+        #like-btn {
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        #like-btn:hover {
+            background-color: rgb(0, 0, 255);
+            color: white;
+        }
+        #comment-box {
+            width: 80%;
+            margin: 20px auto;
+            padding: 10px;
+        }
+
+        #submit_cmnt {
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 15px;
+            width: 425px;
+        }
+
+        #submit_cmnt:hover {
+            background-color: green;
+        }
+
+        #comment-section {
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        #clear-storage {
+            margin: 20px auto;
+            display: block;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        #clear-storage:hover {
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="font-size: 100px; text-align: center;">Exploring the Excess and Ethics of "The Wolf of Wall Street"</h1>
+    <p>
+
+In the realm of cinema, there are films that entertain, films that enlighten, and then there are films that push the boundaries of morality, leaving audiences both captivated and conflicted. Martin Scorsese's "The Wolf of Wall Street" belongs to the latter category. Released in 2013, this dark comedy-drama chronicles the rise and fall of Jordan Belfort, a charismatic stockbroker whose insatiable greed leads him down a path of corruption, debauchery, and ultimately, downfall.
+
+Based on Belfort's memoir of the same name, "The Wolf of Wall Street" pulls no punches in its portrayal of excess. From lavish parties and extravagant lifestyles to rampant drug use and flagrant disregard for the law, the film offers a voyeuristic glimpse into the hedonistic world of high finance in the 1990s. Leonardo DiCaprio delivers a tour de force performance as Belfort, capturing the character's charm, charisma, and moral bankruptcy with electrifying intensity.
+
+But beneath the surface glamour lies a deeper exploration of the ethical implications of Belfort's actions. As he climbs the ranks of Wall Street, Belfort becomes increasingly disconnected from reality, fueled by a toxic combination of greed and hubris. He manipulates clients, exploits loopholes, and revels in his own hedonism without remorse, leaving a trail of destruction in his wake. Yet, despite his reprehensible behavior, there's an undeniable allure to Belfort's charisma, making it all the more unsettling to witness his downfall.
+
+Scorsese doesn't shy away from portraying the consequences of Belfort's actions, however. The film pulls no punches in depicting the collateral damage inflicted upon those caught in his orbit, from his loyal but ultimately betrayed colleagues to his long-suffering wife, played with heartbreaking vulnerability by Margot Robbie. Through their eyes, we see the human cost of Belfort's relentless pursuit of wealth and power, forcing us to confront uncomfortable truths about the nature of greed and ambition.
+
+At its core, "The Wolf of Wall Street" is a cautionary tale—a morality play disguised as a raucous comedy. Scorsese uses humor and satire to skewer the excesses of Wall Street culture, but beneath the laughter lies a sobering message about the dangers of unchecked ambition and the corrupting influence of wealth. As Belfort's empire crumbles around him, we're left to ponder the true cost of his success and the ethical vacuum at the heart of the American Dream.
+
+Of course, no discussion of "The Wolf of Wall Street" would be complete without mentioning its controversial portrayal of sex, drugs, and hedonism. Some have criticized the film for glorifying Belfort's behavior, while others have praised it for its unflinching honesty and audacious filmmaking. Regardless of where one stands, there's no denying the impact that "The Wolf of Wall Street" has had on popular culture and the conversations it has sparked about wealth, power, and the moral fabric of society.
+
+In conclusion, "The Wolf of Wall Street" is a cinematic tour de force—a bold, provocative exploration of excess and ethics that challenges audiences to confront uncomfortable truths about the human condition. With its powerhouse performances, sharp writing, and audacious style, it's a film that lingers in the mind long after the credits roll, reminding us of the dangers of unchecked ambition and the seductive allure of the American Dream.</p>
+
+    <div class="like-section">
+        <button id="like-btn" onclick="toggleLike()">Like</button>
+        <!-- <span id="like-counter">0</span> -->
+    </div>
+
+    <div id="comment-box">
+        <h2>Leave a Comment</h2>
+        <textarea id="comment-input" rows="4" cols="50"></textarea>
+        <br>
+        <button id="submit_cmnt" onclick="submitComment()">Submit Comment</button>
+    </div>
+
+    <div id="comment-section">
+        <h2>Comments</h2>
+        <ul id="comments-list"></ul>
+    </div>
+
+    <button id="clear-storage" onclick="clearLocalStorage()">Clear Local Storage</button>
+
+    <script>
+        let likeCount = parseInt(localStorage.getItem('likeCount')) || 0;
+        let isLiked = localStorage.getItem('isLiked') === 'true' || false;
+
+        function toggleLike() {
+            if (isLiked) {
+                likeCount--;
+                localStorage.setItem('likeCount', likeCount);
+                document.getElementById('like-btn').innerText = 'Like';
+                isLiked = false;
+            } else {
+                likeCount++;
+                localStorage.setItem('likeCount', likeCount);
+                document.getElementById('like-btn').innerText = 'Liked';
+                isLiked = true;
+            }
+            localStorage.setItem('isLiked', isLiked);
+            document.getElementById('like-counter').innerText = likeCount;
+        }
+
+        // Comment functionality
+        function submitComment() {
+            const commentInput = document.getElementById('comment-input').value;
+            if (commentInput.trim() !== "") {
+                const commentList = document.getElementById('comments-list');
+                const newComment = document.createElement('li');
+                newComment.textContent = commentInput;
+                commentList.appendChild(newComment);
+                document.getElementById('comment-input').value = "";
+
+                const comments = JSON.parse(localStorage.getItem('comments')) || [];
+                comments.push(commentInput);
+                localStorage.setItem('comments', JSON.stringify(comments));
+            }
+        }
+
+        window.onload = function () {
+            const comments = JSON.parse(localStorage.getItem('comments')) || [];
+            const commentList = document.getElementById('comments-list');
+            comments.forEach(comment => {
+                const newComment = document.createElement('li');
+                newComment.textContent = comment;
+                commentList.appendChild(newComment);
+            });
+
+            document.getElementById('like-counter').innerText = likeCount;
+
+            if (isLiked) {
+                document.getElementById('like-btn').innerText = 'Liked';
+            }
+        };
+
+        // Function to clear local storage
+        function clearLocalStorage() {
+            localStorage.clear();
+            likeCount = 0;
+            isLiked = false;
+            document.getElementById('like-counter').innerText = likeCount;
+            document.getElementById('like-btn').innerText = 'Like';
+            const commentList = document.getElementById('comments-list');
+            commentList.innerHTML = '';
+        }
+    </script>
+</body>
+</html>
